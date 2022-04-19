@@ -31,12 +31,6 @@ namespace CursedRay
     Framebuffer::Framebuffer(const Framebuffer& other)
         : mWidth{other.mWidth}, mHeight{other.mHeight}
     {
-        if (!other.mIsInitialized)
-        {
-            mIsInitialized = false;
-            return;
-        }
-
         mColorBuffer = new uint32_t[mWidth * mHeight];
         if (!mColorBuffer)
         {
@@ -50,12 +44,6 @@ namespace CursedRay
     ////////////////////////////////////////
     Framebuffer& Framebuffer::operator=(const Framebuffer& other)
     {
-        if (!other.mIsInitialized)
-        {
-            mIsInitialized = false;
-            return *this;
-        }
-
         mWidth  = other.mWidth;
         mHeight = other.mHeight;
 

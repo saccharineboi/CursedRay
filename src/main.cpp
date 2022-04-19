@@ -19,10 +19,10 @@
 #define ERR_FB              2
 
 ////////////////////////////////////////
-#define NUM_SAMPLES         100
+#define NUM_SAMPLES         32
 #define CLEAR_COLOR         glm::vec3(0.7f, 0.9f, 1.0f)
 #define ASPECT_MULTIPLIER   0.75f
-#define MAX_DEPTH           50
+#define MAX_DEPTH           32
 
 ////////////////////////////////////////
 static int StartRayTracer(std::string& errorMessage)
