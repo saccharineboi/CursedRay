@@ -117,8 +117,7 @@ int main()
     if (status)
     {
         std::cerr << "ERROR: " << errorMessage << '\n';
-        return status;
     }
 
-    return 0;
+    return status;
 }
