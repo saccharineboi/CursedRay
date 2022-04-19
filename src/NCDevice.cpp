@@ -40,8 +40,8 @@ namespace CursedRay
     {
         mOptions.n          = mPlane;
         mOptions.scaling    = NCSCALE_NONE;
-        mOptions.leny       = (unsigned)mEffectiveHeight;
-        mOptions.lenx       = (unsigned)mEffectiveWidth;
+        mOptions.leny       = static_cast<unsigned>(mEffectiveHeight);
+        mOptions.lenx       = static_cast<unsigned>(mEffectiveWidth);
         mOptions.blitter    = blitter;
         mOptions.flags      = NCVISUAL_OPTION_NOINTERPOLATE;
     }
