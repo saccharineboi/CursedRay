@@ -57,7 +57,7 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    void NCDevice::Blit(const Framebuffer& framebuffer)
+    void NCDevice::Blit(const Framebuffer& framebuffer) const
     {
         ncblit_rgba(framebuffer.mColorBuffer,
                     mEffectiveWidth * sizeof(uint32_t),
@@ -66,7 +66,7 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    void NCDevice::WaitForKeyPress()
+    void NCDevice::WaitForKeyPress() const
     {
         struct ncinput input;
         while (notcurses_get_nblock(mCtx, &input) != 'q')

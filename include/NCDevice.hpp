@@ -27,8 +27,8 @@ namespace CursedRay
         ////////////////////////////////////////
         ncblitter_e ChooseBlitter();
         void SetOptions(ncblitter_e blitter);
-        void Blit(const Framebuffer& framebuffer);
-        void WaitForKeyPress();
+        void Blit(const Framebuffer& framebuffer) const;
+        void WaitForKeyPress() const;
 
         ////////////////////////////////////////
         void ProgressCallback(float percentage) const;
