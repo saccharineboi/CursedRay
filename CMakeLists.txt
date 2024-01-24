@@ -1,39 +1,51 @@
 cmake_minimum_required(VERSION 3.10)
 project(cursedray)
 
-# C++ settings
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-list(APPEND CMAKE_CXX_FLAGS "-Wall \
-                             -Wextra \
-                             -Werror \
-                             -Og \
-                             -g \
-                             -flto \
-                             -Wfloat-equal \
-                             -Wundef \
-                             -Wshadow \
-                             -Wconversion \
-                             -march=native \
-                             -Winit-self \
-                             -Wdisabled-optimization \
-                             -Wcast-align \
-                             -Wlogical-op \
-                             -Woverloaded-virtual \
-                             -Wredundant-decls \
-                             -Wsign-promo \
-                             -Wstrict-null-sentinel \
-                             -pedantic \
-                             -pedantic-errors \
-                             -Wmissing-noreturn \
-                             -Wpacked \
-                             -Wpointer-arith \
-                             -Wwrite-strings \
-                             -Winvalid-pch \
-                             -Wmissing-include-dirs")
+add_compile_options(
+   "-Wall"
+   "-Wextra"
+   "-Werror"
+   "-Wundef"
+   "-Wshadow"
+   "-Wpointer-arith"
+   "-Wcast-align"
+   "-Wwrite-strings"
+   "-Wswitch-enum"
+   "-Wcast-qual"
+   "-Wconversion"
+   "-Wduplicated-cond"
+   "-Wnon-virtual-dtor"
+   "-Woverloaded-virtual"
+   "-Wformat-nonliteral"
+   "-Wformat-security"
+   "-Wformat-y2k"
+   "-Wformat=2"
+   "-Wno-unused-parameter"
+   "-Wunused"
+   "-Winvalid-pch"
+   "-Wlogical-op"
+   "-Wmissing-declarations"
+   "-Wmissing-field-initializers"
+   "-Wmissing-format-attribute"
+   "-Wmissing-include-dirs"
+   "-Wmissing-noreturn"
+   "-Wpacked"
+   "-Wredundant-decls"
+   "-Wstack-protector"
+   "-Wstrict-null-sentinel"
+   "-Wdisabled-optimization"
+   "-fno-rtti"
+   "-fno-exceptions"
+   "-Wno-suggest-attribute=format"
+   "-DGLM_ENABLE_EXPERIMENTAL"
+)
 
-# add source files
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -march=native -mtune=native -flto")
+
 set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/main.cpp
                     ${CMAKE_SOURCE_DIR}/src/Sphere.cpp
                     ${CMAKE_SOURCE_DIR}/src/Camera.cpp
@@ -42,7 +54,6 @@ set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/main.cpp
                     ${CMAKE_SOURCE_DIR}/src/NCDevice.cpp
                     ${CMAKE_SOURCE_DIR}/src/Material.cpp)
 
-# add header files
 set(HEADER_FILES    ${CMAKE_SOURCE_DIR}/include/Ray.hpp
                     ${CMAKE_SOURCE_DIR}/include/Hit.hpp
                     ${CMAKE_SOURCE_DIR}/include/Sphere.hpp
@@ -53,12 +64,11 @@ set(HEADER_FILES    ${CMAKE_SOURCE_DIR}/include/Ray.hpp
                     ${CMAKE_SOURCE_DIR}/include/NCDevice.hpp
                     ${CMAKE_SOURCE_DIR}/include/Material.hpp)
 
-# include directories
 include_directories (
     "${CMAKE_SOURCE_DIR}/include"
+    "${CMAKE_SOURCE_DIR}/submodules/glm"
 )
 
-# colored_cube
 set(LIBS ${LIBS} notcurses notcurses-core m pthread)
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBS})

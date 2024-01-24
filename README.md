@@ -1,15 +1,24 @@
-# CursedRay
+## 🌻 CursedRay: GPU-accelerated path tracer
 
-**Notcurses-based ray-tracer that outputs directly to the terminal**
+CursedRay is a GPU-accelerated path tracer that uses the OpenCL (version: 3.0) API. Programmed in C++.
 
-*Inspired by [Ray Tracing In One Weekend](https://raytracing.github.io/)*
+## Features
 
-![Example Rendering](renders/example0.png)
+- [ ] Ray-sphere intersection
 
-# License
+## License
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+Copyright (C) 2024 Omar Huseynov
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
