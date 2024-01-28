@@ -16,46 +16,44 @@
 
 #pragma once
 
-#include "Framebuffer.hpp"
-
 #include <notcurses/notcurses.h>
 #include <string>
+#include <vector>
+#include <cstdint>
 
 namespace CursedRay
 {
     ////////////////////////////////////////
     struct NCDevice
     {
-        ////////////////////////////////////////
+    private:
+        notcurses* mContext;
+        ncplane* mPlane;
+        ncvisual_options mOptions;
+
+        std::uint32_t mWidth, mHeight;
+        std::uint32_t mPixelsWidth, mPixelsHeight;
+        std::uint32_t mCellWidth, mCellHeight;
+
+    public:
         NCDevice();
 
-        ////////////////////////////////////////
-        ~NCDevice() { notcurses_stop(mCtx); }
+        NCDevice(const NCDevice&) = delete;
+        NCDevice& operator=(const NCDevice&) = delete;
+        NCDevice(NCDevice&&) = delete;
+        NCDevice& operator=(NCDevice&&) = delete;
 
-        ////////////////////////////////////////
-        NCDevice(const NCDevice&)               = delete;
-        NCDevice& operator=(const NCDevice&)    = delete;
-        NCDevice(NCDevice&&)                    = delete;
-        NCDevice& operator=(NCDevice&&)         = delete;
+        ~NCDevice() { notcurses_stop(mContext); }
 
-        ////////////////////////////////////////
-        ncblitter_e ChooseBlitter();
-        void SetOptions(ncblitter_e blitter);
-        void Blit(const Framebuffer& framebuffer) const;
-        void WaitForKeyPress() const;
+        void Blit(const std::vector<float>& pixels) const;
 
-        ////////////////////////////////////////
-        void ProgressCallback(float percentage) const;
+        std::uint32_t GetWidth() const { return mWidth; }
+        std::uint32_t GetHeight() const { return mHeight; }
 
-        ////////////////////////////////////////
-        int mRealWidth, mRealHeight;
-        int mEffectiveWidth, mEffectiveHeight;
+        std::uint32_t GetPixelsWidth() const { return mPixelsWidth; }
+        std::uint32_t GetPixelsHeight() const { return mPixelsHeight; }
 
-        bool mIsInitialized    = false;
-        std::string mErrorMessage;
-
-        struct notcurses* mCtx = nullptr;
-        struct ncplane* mPlane = nullptr;
-        struct ncvisual_options mOptions{};
+        std::uint32_t GetCellWidth() const { return mCellWidth; }
+        std::uint32_t GetCellHeight() const { return mCellHeight; }
     };
 }

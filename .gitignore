@@ -1,2 +1,8 @@
 # build files
 build/
+
+# cache
+*~
+.*~
+*.swp
+.cache/

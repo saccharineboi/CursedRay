@@ -3,6 +3,7 @@ project(cursedray)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_compile_options(
    "-Wall"
@@ -38,13 +39,12 @@ add_compile_options(
    "-Wstrict-null-sentinel"
    "-Wdisabled-optimization"
    "-fno-rtti"
-   "-fno-exceptions"
    "-Wno-suggest-attribute=format"
    "-DGLM_ENABLE_EXPERIMENTAL"
 )
 
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -march=native -mtune=native -flto")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -D_DEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -march=native -mtune=native -flto -DNDEBUG")
 
 set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/main.cpp
                     ${CMAKE_SOURCE_DIR}/src/Sphere.cpp

@@ -34,8 +34,8 @@ namespace CursedRay
                        float tMin,
                        float tMax) const
     {
-        int viewportWidth   = static_cast<int>(device.mEffectiveWidth);
-        int viewportHeight  = static_cast<int>(device.mEffectiveHeight);
+        int viewportWidth   = static_cast<int>(0);
+        int viewportHeight  = static_cast<int>(0);
 
         for (int row = 0; row < viewportHeight; ++row)
         {
@@ -56,9 +56,9 @@ namespace CursedRay
                 color = glm::sqrt(scale * color); // gamma correction
                 framebuffer.SetPixel(row, col, color);
             }
-            float percentage = (float)(row * viewportWidth) /
-                               (float)(viewportWidth * viewportHeight) * 100.0f;
-            device.ProgressCallback(percentage);
+            // float percentage = (float)(row * viewportWidth) /
+            //                    (float)(viewportWidth * viewportHeight) * 100.0f;
+            // device.ProgressCallback(percentage);
         }
     }
 
