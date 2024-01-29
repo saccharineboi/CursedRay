@@ -46,7 +46,7 @@ add_compile_options(
 set(CMAKE_CXX_FLAGS_DEBUG "-g -D_DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -march=native -mtune=native -flto -DNDEBUG")
 
-set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/main.cpp
+set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/CursedRay.cpp
                     ${CMAKE_SOURCE_DIR}/src/Sphere.cpp
                     ${CMAKE_SOURCE_DIR}/src/Camera.cpp
                     ${CMAKE_SOURCE_DIR}/src/Scene.cpp
@@ -70,5 +70,5 @@ include_directories (
 )
 
 set(LIBS ${LIBS} notcurses notcurses-core m pthread)
-add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBS})
+add_executable(cray ${HEADER_FILES} ${SOURCE_FILES})
+target_link_libraries(cray PUBLIC ${LIBS})

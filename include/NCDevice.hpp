@@ -30,6 +30,7 @@ namespace CursedRay
         notcurses* mContext;
         ncplane* mPlane;
         ncvisual_options mOptions;
+        notcurses_options mContextOptions;
 
         std::uint32_t mWidth, mHeight;
         std::uint32_t mPixelsWidth, mPixelsHeight;
@@ -43,17 +44,33 @@ namespace CursedRay
         NCDevice(NCDevice&&) = delete;
         NCDevice& operator=(NCDevice&&) = delete;
 
-        ~NCDevice() { notcurses_stop(mContext); }
+        ~NCDevice();
 
-        void Blit(const std::vector<float>& pixels) const;
+        void Blit(const std::vector<std::uint8_t>& pixels, std::int32_t width, std::int32_t height) const;
+        void Block() const;
 
         std::uint32_t GetWidth() const { return mWidth; }
         std::uint32_t GetHeight() const { return mHeight; }
 
+        std::int32_t GetWidthSigned() const { return static_cast<std::int32_t>(mWidth); }
+        std::int32_t GetHeightSigned() const { return static_cast<std::int32_t>(mHeight); }
+
         std::uint32_t GetPixelsWidth() const { return mPixelsWidth; }
         std::uint32_t GetPixelsHeight() const { return mPixelsHeight; }
 
+        std::int32_t GetPixelsWidthSigned() const { return static_cast<std::int32_t>(mPixelsWidth); }
+        std::int32_t GetPixelsHeightSigned() const { return static_cast<std::int32_t>(mPixelsHeight); }
+
         std::uint32_t GetCellWidth() const { return mCellWidth; }
         std::uint32_t GetCellHeight() const { return mCellHeight; }
+
+        std::int32_t GetCellWidthSigned() const { return static_cast<std::int32_t>(mCellWidth); }
+        std::int32_t GetCellHeightSigned() const { return static_cast<std::int32_t>(mCellHeight); }
+
+        std::uint32_t GetRenderWidth() const { return mOptions.lenx; }
+        std::uint32_t GetRenderHeight() const { return mOptions.leny; }
+
+        std::int32_t GetRenderWidthSigned() const { return static_cast<std::int32_t>(mOptions.lenx); }
+        std::int32_t GetRenderHeightSigned() const { return static_cast<std::int32_t>(mOptions.leny); }
     };
 }

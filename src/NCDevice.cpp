@@ -17,23 +17,40 @@
 #include "NCDevice.hpp"
 
 #include <cstdlib>
+#include <notcurses/nckeys.h>
 #include <notcurses/notcurses.h>
 
 namespace CursedRay
 {
     ////////////////////////////////////////
-    void NCDevice::Blit(const std::vector<float>& pixels) const
+    void NCDevice::Blit(const std::vector<std::uint8_t>& pixels, std::int32_t width, std::int32_t height) const
     {
-        std::int32_t rows{ static_cast<std::int32_t>(mPixelsHeight) };
-        std::int32_t cols{ static_cast<std::int32_t>(mPixelsWidth) };
-        ncvisual* ncv{ ncvisual_from_rgb_packed(pixels.data(), rows, rows * 3, cols, NCALPHA_OPAQUE) };
-        ncvisual_blit(mContext, ncv, &mOptions);
-        notcurses_render(mContext);
-        ncvisual_destroy(ncv);
+        if (ncblit_rgba(pixels.data(), width * 4, &mOptions) < 0) {
+            std::fprintf(stderr, "CursedRay: error in ncblit_rgb_packed\n");
+            notcurses_stop(mContext);
+            std::exit(EXIT_FAILURE);
+        }
+        if (notcurses_render(mContext) == -1) {
+            std::fprintf(stderr, "CursedRay: error in notcurses_render\n");
+            notcurses_stop(mContext);
+            std::exit(EXIT_FAILURE);
+        }
+    }
+
+    ////////////////////////////////////////
+    void NCDevice::Block() const
+    {
+        ncinput input;
+        while (notcurses_get_blocking(mContext, &input) != NCKEY_ESC)
+            ;
     }
 
     ////////////////////////////////////////
     NCDevice::NCDevice()
+        : mContext{}, mPlane{}, mOptions{}, mContextOptions{},
+          mWidth{}, mHeight{},
+          mPixelsWidth{}, mPixelsHeight{},
+          mCellWidth{}, mCellHeight{}
     {
         if (!setlocale(LC_ALL, ""))
         {
@@ -41,10 +58,10 @@ namespace CursedRay
             std::exit(EXIT_FAILURE);
         }
 
-        notcurses_options options{};
-        options.flags = NCOPTION_NO_ALTERNATE_SCREEN | NCOPTION_SUPPRESS_BANNERS;
+        mContextOptions.flags = NCOPTION_NO_ALTERNATE_SCREEN | NCOPTION_SUPPRESS_BANNERS;
+        mContextOptions.loglevel = NCLOGLEVEL_ERROR;
 
-        mContext = notcurses_init(&options, nullptr);
+        mContext = notcurses_init(&mContextOptions, nullptr);
         if (!mContext)
         {
             std::fprintf(stderr, "CursedRay: couldn't initialize notcurses");
@@ -67,13 +84,17 @@ namespace CursedRay
         if (notcurses_canpixel(mContext))
         {
             blitter = NCBLIT_PIXEL;
+            mOptions.leny = mPixelsHeight;
+            mOptions.lenx = mPixelsWidth;
 #ifdef _DEBUG
             std::printf("CursedRay: can blit in pixels\n");
 #endif
         }
-        else if (notcurses_cansextant(mContext))
+        if (notcurses_cansextant(mContext))
         {
             blitter = NCBLIT_3x2;
+            mOptions.leny = mHeight * 3;
+            mOptions.lenx = mWidth * 2;
 #ifdef _DEBUG
             std::printf("CursedRay: can blit in sextants\n");
 #endif
@@ -81,6 +102,8 @@ namespace CursedRay
         else if (notcurses_canquadrant(mContext))
         {
             blitter = NCBLIT_2x2;
+            mOptions.leny = mHeight * 2;
+            mOptions.lenx = mWidth * 2;
 #ifdef _DEBUG
             std::printf("CursedRay: can blit in quadrants\n");
 #endif
@@ -88,6 +111,8 @@ namespace CursedRay
         else if (notcurses_canhalfblock(mContext))
         {
             blitter = NCBLIT_2x1;
+            mOptions.leny = mHeight * 2;
+            mOptions.lenx = mWidth;
 #ifdef _DEBUG
             std::printf("CursedRay: can blit in halves\n");
 #endif
@@ -95,19 +120,31 @@ namespace CursedRay
         else
         {
             blitter = NCBLIT_1x1;
+            mOptions.leny = mHeight;
+            mOptions.lenx = mWidth;
 #ifdef _DEBUG
             std::printf("CursedRay: can blit in cells\n");
 #endif
         }
 
+#ifdef _DEBUG
+        std::printf("CursedRay: render output: %u:%u\n", mOptions.lenx, mOptions.leny);
+#endif
+
         mOptions.n = mPlane;
         mOptions.scaling = NCSCALE_NONE;
-        mOptions.leny = mHeight;
-        mOptions.lenx = mWidth;
         mOptions.blitter = blitter;
         mOptions.flags = NCVISUAL_OPTION_NOINTERPOLATE;
 
-        ncplane_set_fg_rgb8(mPlane, 0, 0, 0);
-        ncplane_set_bg_rgb8(mPlane, 255, 255, 255);
+        ncplane_set_fg_rgb8(mPlane, 255, 255, 255);
+        ncplane_set_bg_rgb8(mPlane, 0, 0, 0);
+    }
+
+    ////////////////////////////////////////
+    NCDevice::~NCDevice()
+    {
+        ncplane_erase(mPlane);
+        notcurses_render(mContext);
+        notcurses_stop(mContext);
     }
 }
