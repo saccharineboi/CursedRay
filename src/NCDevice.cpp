@@ -88,8 +88,8 @@ namespace CursedRay
         std::printf("\t--license:\t\t Print the license\n");
         std::printf("\t--clear-on-exit:\t Clear the terminal on exit\n\t\t\t\t Default is '%d'\n", !DEFAULT_NO_ALTERNATE_SCREEN);
         std::printf("\t--dont-suppress-banners: Don't suppress notcurses' banners\n\t\t\t\t Default is '%d'\n", DEFAULT_SUPPRESS_BANNERS);
-        std::printf("\t--blitter:\t\t Blitter to use\n\t\t\t\t Valid values are '1x1', '2x1', '2x2', '3x2', and 'pixel'\n\t\t\t\t Default is '%s'\n", GetBlitterName());
-        std::printf("\t--log-level:\t\t Log level to use\n\t\t\t\t Valid values are 'fatal', 'error', 'panic', 'debug',\n\t\t\t\t 'info', 'warning', 'silent', 'trace', and 'verbose'\n\t\t\t\t Default is '%s'\n", GetLogLevelName());
+        std::printf("\t--blitter:\t\t Blitter to use\n\t\t\t\t Valid values are '1x1', '2x1', '2x2', '3x2',\n\t\t\t\t and 'pixel'\n\t\t\t\t Default is '%s'\n", GetBlitterName());
+        std::printf("\t--log-level:\t\t Log level to use\n\t\t\t\t Valid values are 'fatal', 'error', 'panic',\n\t\t\t\t 'debug', 'info', 'warning', 'silent',\n\t\t\t\t 'trace', and 'verbose'\n\t\t\t\t Default is '%s'\n", GetLogLevelName());
         std::printf("\t--log-file:\t\t Log file to write logs to\n\t\t\t\t Default is '%s'\n", DEFAULT_LOGFILE_NAME);
         std::exit(EXIT_SUCCESS);
     }
