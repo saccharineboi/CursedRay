@@ -16,13 +16,45 @@
 
 #pragma once
 
+#include "Constants.hpp"
+
+#include <cstdlib>
 #include <notcurses/notcurses.h>
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <cassert>
+#include <cstring>
+#include <fstream>
 
 namespace CursedRay
 {
+    ////////////////////////////////////////
+    struct NCDeviceOptions
+    {
+    private:
+        bool mNoAlternateScreen{ DEFAULT_NO_ALTERNATE_SCREEN };
+        bool mSuppressBanners{ DEFAULT_SUPPRESS_BANNERS };
+        ncblitter_e mBlitter{ DEFAULT_BLITTER };
+        ncloglevel_e mLogLevel{ DEFAULT_LOGLEVEL };
+        std::string mLogFileName{ DEFAULT_LOGFILE_NAME };
+
+        const char* GetBlitterName() const;
+        const char* GetLogLevelName() const;
+
+        [[noreturn]] void PrintHelp(char** argv) const;
+
+    public:
+        NCDeviceOptions(int argc, char** argv);
+
+        bool NoAlternateScreen() const { return mNoAlternateScreen; }
+        bool SuppressBanners() const { return mSuppressBanners; }
+        ncblitter_e Blitter() const { return mBlitter; }
+        ncloglevel_e LogLevel() const { return mLogLevel; }
+        std::string LogFileName() const { return mLogFileName; }
+        const char* LogFileNameStr() const { return mLogFileName.c_str(); }
+    };
+
     ////////////////////////////////////////
     struct NCDevice
     {
@@ -36,8 +68,10 @@ namespace CursedRay
         std::uint32_t mPixelsWidth, mPixelsHeight;
         std::uint32_t mCellWidth, mCellHeight;
 
+        std::ofstream mLogFile;
+
     public:
-        NCDevice();
+        explicit NCDevice(const NCDeviceOptions& options);
 
         NCDevice(const NCDevice&) = delete;
         NCDevice& operator=(const NCDevice&) = delete;
@@ -46,8 +80,9 @@ namespace CursedRay
 
         ~NCDevice();
 
-        void Blit(const std::vector<std::uint8_t>& pixels, std::int32_t width, std::int32_t height) const;
+        void Blit(const std::vector<std::uint8_t>& pixels, std::int32_t width, std::int32_t height);
         void Block() const;
+        void Log(const char* args, ...);
 
         std::uint32_t GetWidth() const { return mWidth; }
         std::uint32_t GetHeight() const { return mHeight; }

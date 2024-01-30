@@ -24,19 +24,16 @@
 #include <cmath>
 
 ////////////////////////////////////////
-int main()
+int main(int argc, char** argv)
 {
-    CursedRay::NCDevice device;
+    CursedRay::NCDeviceOptions options(argc, argv);
+    CursedRay::NCDevice device(options);
 
     std::vector<std::uint8_t> pixels;
     pixels.reserve(device.GetRenderWidth() * device.GetRenderHeight() * 4);
 
-    std::printf("[DEBUG] initialized the buffer\n");
-
     std::random_device rd;
     std::uniform_int_distribution<std::uint8_t> dist(0, 255);
-
-    std::printf("%u:%u\n", device.GetRenderWidth(), device.GetRenderHeight());
 
     for (std::uint32_t row{}; row < device.GetRenderHeight(); ++row) {
         for (std::uint32_t col{}; col < device.GetRenderWidth(); ++col) {
@@ -57,7 +54,7 @@ int main()
         }
     }
 
-    std::fprintf(stderr, "TESTING\n");
+    device.Log("[DEBUG] initialized the buffer");
 
     device.Blit(pixels, device.GetRenderWidthSigned(), device.GetRenderHeightSigned());
     device.Block();
