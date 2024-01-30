@@ -1,6 +1,6 @@
-## 🌻 CursedRay: GPU-accelerated path tracer
+## 🌻 CursedRay: Hardware-accelerated path tracer
 
-CursedRay is a GPU-accelerated path tracer that uses the OpenCL (version: 3.0) API. Programmed in C++.
+CursedRay is a hardware-accelerated path tracer that uses the OpenCL (version: 3.0) API. Programmed in C++.
 
 ## Features
 
