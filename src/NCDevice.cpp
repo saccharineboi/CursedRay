@@ -41,7 +41,7 @@ namespace CursedRay
     void NCDevice::Block() const
     {
         ncinput input;
-        while (notcurses_get_blocking(mContext, &input) != NCKEY_ESC)
+        while (notcurses_get_blocking(mContext, &input) != NCKEY_ESC && input.evtype != NCTYPE_PRESS)
             ;
     }
 
