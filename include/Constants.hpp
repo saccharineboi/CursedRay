@@ -33,5 +33,5 @@ namespace CursedRay
     constexpr bool DEFAULT_SUPPRESS_BANNERS{ true };
     constexpr ncblitter_e DEFAULT_BLITTER{ NCBLIT_1x1 };
     constexpr ncloglevel_e DEFAULT_LOGLEVEL{ NCLOGLEVEL_SILENT };
-    constexpr const char* DEFAULT_LOGFILE_NAME{ "cray.log" };
+    constexpr const char* DEFAULT_LOGFILE_NAME{ "CursedRay.log.txt" };
 }

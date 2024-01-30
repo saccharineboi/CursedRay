@@ -210,6 +210,7 @@ namespace CursedRay
                     std::exit(EXIT_FAILURE);
                 }
                 mLogFileName = std::string{ argv[i + 1] };
+                ++i;
             }
             else {
                 std::fprintf(stderr, "%s: %s is an invalid option\n", argv[0], argv[i]);
