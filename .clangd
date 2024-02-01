@@ -28,6 +28,4 @@ CompileFlags:
         "-Wredundant-decls",
         "-Wstack-protector",
         "-Wdisabled-optimization",
-        "-fno-rtti",
-        "-Isubmodules/glm",
-        "-Iinclude" ]
+        "-fno-rtti" ]
