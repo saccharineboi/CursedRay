@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "NCDevice.hpp"
+#include "HWDevice.hpp"
 #include "Framebuffer.hpp"
 
 #include <glm/common.hpp>
@@ -28,14 +29,16 @@
 ////////////////////////////////////////
 int main(int argc, char** argv)
 {
-    CursedRay::NCDeviceOptions deviceOptions(argc, argv);
-    CursedRay::NCDevice device(deviceOptions);
+    CursedRay::NCDeviceOptions ncDeviceOptions(argc, argv);
+    CursedRay::NCDevice ncDevice(ncDeviceOptions);
 
-    CursedRay::FramebufferOptions framebufferOptions(device.GetRenderWidth(),
-                                                     device.GetRenderHeight(),
-                                                     deviceOptions.ClearColor());
+    CursedRay::HWDevice hwDevice;
+
+    CursedRay::FramebufferOptions framebufferOptions(ncDevice.GetRenderWidth(),
+                                                     ncDevice.GetRenderHeight(),
+                                                     ncDeviceOptions.ClearColor());
     CursedRay::Framebuffer framebuffer(framebufferOptions);
 
-    device.Blit(framebuffer);
-    device.Block();
+    ncDevice.Blit(framebuffer);
+    ncDevice.Block();
 }

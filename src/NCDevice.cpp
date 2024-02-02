@@ -17,6 +17,7 @@
 #include "NCDevice.hpp"
 #include "Constants.hpp"
 #include "Framebuffer.hpp"
+#include "Log.hpp"
 
 #include <algorithm>
 #include <cstdarg>
@@ -115,7 +116,6 @@ namespace CursedRay
         std::printf("\t--dont-suppress-banners: Don't suppress notcurses' banners\n\t\t\t\t Default is '%d'\n", DEFAULT_SUPPRESS_BANNERS);
         std::printf("\t--blitter:\t\t Blitter to use\n\t\t\t\t Valid values are '1x1', '2x1', '2x2', '3x2',\n\t\t\t\t and 'pixel'\n\t\t\t\t Default is '%s'\n", GetBlitterName());
         std::printf("\t--log-level:\t\t Log level to use\n\t\t\t\t Valid values are 'fatal', 'error', 'panic',\n\t\t\t\t 'debug', 'info', 'warning', 'silent',\n\t\t\t\t 'trace', and 'verbose'\n\t\t\t\t Default is '%s'\n", GetLogLevelName());
-        std::printf("\t--log-file:\t\t Log file to write logs to\n\t\t\t\t Default is '%s'\n", DEFAULT_LOGFILE_NAME);
         std::printf("\t--clear-color:\t\t Set background color\n\t\t\t\t Default is '%s'\n", GetClearColorValues());
         std::exit(EXIT_SUCCESS);
     }
@@ -230,14 +230,6 @@ namespace CursedRay
                     std::exit(EXIT_FAILURE);
                 }
             }
-            else if (!std::strncmp("--log-file", argv[i], DEFAULT_ARG_STR_LEN)) {
-                if (i == argc - 1) {
-                    std::fprintf(stderr, "%s: --log-file requires 1 argument\n", argv[0]);
-                    std::exit(EXIT_FAILURE);
-                }
-                mLogFileName = std::string{ argv[i + 1] };
-                ++i;
-            }
             else if (!std::strncmp("--clear-color", argv[i], DEFAULT_ARG_STR_LEN)) {
                 if (i >= argc - 4) {
                     std::fprintf(stderr, "%s: --clear-color requires 4 arguments\n", argv[0]);
@@ -293,30 +285,6 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    void NCDevice::Log(const char* args, ...)
-    {
-        std::time_t timer;
-        std::time(&timer);
-        std::tm timeInfo{};
-
-#ifdef __unix__
-        localtime_r(&timer, &timeInfo);
-#elif defined(_MSC_VER)
-        localtime_s(&timeInfo, &timer);
-#else
-#error "CursedRay is not supported on this platform"
-#endif
-
-        std::va_list ap;
-        va_start(ap, args);
-        char processedOutput[250], finalOutput[500];
-        std::vsnprintf(processedOutput, 250, args, ap);
-        int charsWritten{ std::snprintf(finalOutput, 500, "[%02d:%02d:%02d %02d:%02d:%02d] %s\n", timeInfo.tm_mon, timeInfo.tm_mday, timeInfo.tm_year + 1900, timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_sec, processedOutput) };
-        mLogFile.write(finalOutput, charsWritten);
-        va_end(ap);
-    }
-
-    ////////////////////////////////////////
     void NCDevice::Block() const
     {
         ncinput input;
@@ -329,8 +297,7 @@ namespace CursedRay
         : mContext{}, mPlane{}, mOptions{}, mContextOptions{},
           mWidth{}, mHeight{},
           mPixelsWidth{}, mPixelsHeight{},
-          mCellWidth{}, mCellHeight{},
-          mLogFile{options.LogFileName(), std::ios_base::out | std::ios_base::ate}
+          mCellWidth{}, mCellHeight{}
     {
         if (!setlocale(LC_ALL, "")) {
             std::fprintf(stderr, "CursedRay: coudn't set locale");
@@ -406,6 +373,5 @@ namespace CursedRay
     NCDevice::~NCDevice()
     {
         notcurses_stop(mContext);
-        mLogFile.close();
     }
 }
