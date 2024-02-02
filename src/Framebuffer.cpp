@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify
@@ -22,78 +22,23 @@
 namespace CursedRay
 {
     ////////////////////////////////////////
-    Framebuffer::~Framebuffer()
+    Framebuffer::Framebuffer(const FramebufferOptions& options)
+        : mWidth{options.GetWidth()}, mHeight{options.GetHeight()}
     {
-        delete[] mColorBuffer;
-    }
+        glm::vec4 clearColor{ options.GetClearColor() };
+        mData.reserve(mWidth * mHeight * 4);
+        for (std::uint32_t row{}; row < mHeight; ++row) {
+            for (std::uint32_t col{}; col < mWidth; ++col) {
+                std::uint8_t redChannel{ static_cast<std::uint8_t>(clearColor.r * 255.0f) };
+                std::uint8_t greenChannel{ static_cast<std::uint8_t>(clearColor.g * 255.0f) };
+                std::uint8_t blueChannel{ static_cast<std::uint8_t>(clearColor.b * 255.0f) };
+                std::uint8_t alphaChannel{ static_cast<std::uint8_t>(clearColor.a * 255.0f) };
 
-    ////////////////////////////////////////
-    Framebuffer::Framebuffer(int width, int height)
-        : mWidth{width}, mHeight{height}
-    {
-        mColorBuffer = new uint32_t[mWidth * mHeight];
-        if (!mColorBuffer)
-        {
-            mErrorMessage = "Framebuffer::Framebuffer(): insufficient memory for mColorBuffer";
-            return;
+                mData.push_back(redChannel);
+                mData.push_back(greenChannel);
+                mData.push_back(blueChannel);
+                mData.push_back(alphaChannel);
+            }
         }
-        std::fill_n(mColorBuffer, mWidth * mHeight, 0);
-        mIsInitialized = true;
-    }
-
-    ////////////////////////////////////////
-    Framebuffer::Framebuffer(const Framebuffer& other)
-        : mWidth{other.mWidth}, mHeight{other.mHeight}
-    {
-        mColorBuffer = new uint32_t[mWidth * mHeight];
-        if (!mColorBuffer)
-        {
-            mErrorMessage = "Framebuffer::Framebuffer(): insufficient memory for mColorBuffer";
-            return;
-        }
-        std::copy(other.mColorBuffer, other.mColorBuffer + mWidth * mHeight, mColorBuffer);
-        mIsInitialized = true;
-    }
-
-    ////////////////////////////////////////
-    Framebuffer& Framebuffer::operator=(const Framebuffer& other)
-    {
-        mWidth  = other.mWidth;
-        mHeight = other.mHeight;
-
-        delete[] mColorBuffer;
-        mColorBuffer = new uint32_t[mWidth * mHeight];
-        if (!mColorBuffer)
-        {
-            mErrorMessage = "Framebuffer::operator=(): insufficient memory for mColorBuffer";
-            return *this;
-        }
-        std::copy(other.mColorBuffer, other.mColorBuffer + mWidth * mHeight, mColorBuffer);
-        mIsInitialized = true;
-        return *this;
-    }
-
-    ////////////////////////////////////////
-    Framebuffer::Framebuffer(Framebuffer&& other)
-        : mWidth            {other.mWidth},
-          mHeight           {other.mHeight},
-          mColorBuffer      {other.mColorBuffer},
-          mIsInitialized    {other.mIsInitialized}
-    {
-        other.mColorBuffer = nullptr;
-    }
-
-    ////////////////////////////////////////
-    Framebuffer& Framebuffer::operator=(Framebuffer&& other)
-    {
-        mWidth              = other.mWidth;
-        mHeight             = other.mHeight;
-        mIsInitialized      = other.mIsInitialized;
-
-        delete[] mColorBuffer;
-        mColorBuffer        = other.mColorBuffer;
-        other.mColorBuffer  = nullptr;
-
-        return *this;
     }
 }

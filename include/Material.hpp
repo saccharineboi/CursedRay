@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify

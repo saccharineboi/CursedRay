@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ namespace CursedRay
                 }
                 float scale = 1.0f / (float)numSamples;
                 color = glm::sqrt(scale * color); // gamma correction
-                framebuffer.SetPixel(row, col, color);
+                // framebuffer.SetPixel(row, col, color);
             }
             // float percentage = (float)(row * viewportWidth) /
             //                    (float)(viewportWidth * viewportHeight) * 100.0f;

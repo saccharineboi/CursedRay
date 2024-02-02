@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,9 @@
 
 #include "NCDevice.hpp"
 #include "Constants.hpp"
+#include "Framebuffer.hpp"
 
+#include <algorithm>
 #include <cstdarg>
 #include <cstdio>
 #include <ctime>
@@ -80,6 +82,29 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
+    const char* NCDeviceOptions::GetClearColorValues() const
+    {
+        static std::string colorInStr;
+
+        std::string redValueStr{ std::to_string(mClearColor.r) };
+        std::string greenValueStr{ std::to_string(mClearColor.g) };
+        std::string blueValueStr{ std::to_string(mClearColor.b) };
+        std::string alphaValueStr{ std::to_string(mClearColor.a) };
+
+        colorInStr.clear();
+        colorInStr.append("(");
+        colorInStr.append(redValueStr);
+        colorInStr.append(", ");
+        colorInStr.append(greenValueStr);
+        colorInStr.append(", ");
+        colorInStr.append(blueValueStr);
+        colorInStr.append(", ");
+        colorInStr.append(alphaValueStr);
+        colorInStr.append(")");
+        return colorInStr.c_str();
+    }
+
+    ////////////////////////////////////////
     void NCDeviceOptions::PrintHelp(char** argv) const
     {
         std::printf("Usage: %s [OPTIONS...]\n\n", argv[0]);
@@ -91,6 +116,7 @@ namespace CursedRay
         std::printf("\t--blitter:\t\t Blitter to use\n\t\t\t\t Valid values are '1x1', '2x1', '2x2', '3x2',\n\t\t\t\t and 'pixel'\n\t\t\t\t Default is '%s'\n", GetBlitterName());
         std::printf("\t--log-level:\t\t Log level to use\n\t\t\t\t Valid values are 'fatal', 'error', 'panic',\n\t\t\t\t 'debug', 'info', 'warning', 'silent',\n\t\t\t\t 'trace', and 'verbose'\n\t\t\t\t Default is '%s'\n", GetLogLevelName());
         std::printf("\t--log-file:\t\t Log file to write logs to\n\t\t\t\t Default is '%s'\n", DEFAULT_LOGFILE_NAME);
+        std::printf("\t--clear-color:\t\t Set background color\n\t\t\t\t Default is '%s'\n", GetClearColorValues());
         std::exit(EXIT_SUCCESS);
     }
 
@@ -212,6 +238,22 @@ namespace CursedRay
                 mLogFileName = std::string{ argv[i + 1] };
                 ++i;
             }
+            else if (!std::strncmp("--clear-color", argv[i], DEFAULT_ARG_STR_LEN)) {
+                if (i >= argc - 4) {
+                    std::fprintf(stderr, "%s: --clear-color requires 4 arguments\n", argv[0]);
+                    std::exit(EXIT_FAILURE);
+                }
+                float redChannel{ static_cast<float>(std::atof(argv[i + 1])) };
+                float greenChannel{ static_cast<float>(std::atof(argv[i + 2])) };
+                float blueChannel{ static_cast<float>(std::atof(argv[i + 3])) };
+                float alphaChannel{ static_cast<float>(std::atof(argv[i + 4])) };
+
+                mClearColor.r = std::clamp(redChannel, 0.0f, 1.0f);
+                mClearColor.g = std::clamp(greenChannel, 0.0f, 1.0f);
+                mClearColor.b = std::clamp(blueChannel, 0.0f, 1.0f);
+                mClearColor.a = std::clamp(alphaChannel, 0.0f, 1.0f);
+                i += 4;
+            }
             else {
                 std::fprintf(stderr, "%s: %s is an invalid option\n", argv[0], argv[i]);
                 PrintHelp(argv);
@@ -230,6 +272,21 @@ namespace CursedRay
         }
         if (notcurses_render(mContext) == -1) {
             Log("CursedRay: error in notcurses_render");
+            notcurses_stop(mContext);
+            std::exit(EXIT_FAILURE);
+        }
+    }
+
+    ////////////////////////////////////////
+    void NCDevice::Blit(const Framebuffer& framebuffer)
+    {
+        if (ncblit_rgba(framebuffer.GetData(), framebuffer.GetWidthSigned() * 4, &mOptions) < 0) {
+            Log("CursedRay: error in ncblit_rgba, framebuffer %p", &framebuffer);
+            notcurses_stop(mContext);
+            std::exit(EXIT_FAILURE);
+        }
+        if (notcurses_render(mContext) == -1) {
+            Log("CursedRay: error in notcurses_render, framebuffer %p", &framebuffer);
             notcurses_stop(mContext);
             std::exit(EXIT_FAILURE);
         }
@@ -273,7 +330,8 @@ namespace CursedRay
           mWidth{}, mHeight{},
           mPixelsWidth{}, mPixelsHeight{},
           mCellWidth{}, mCellHeight{},
-          mLogFile{options.LogFileName(), std::ios_base::out | std::ios_base::ate}
+          mLogFile{options.LogFileName(), std::ios_base::out | std::ios_base::ate},
+          mClearColor{ options.ClearColor() }
     {
         if (!setlocale(LC_ALL, ""))
         {

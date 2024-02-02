@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <glm/vec4.hpp>
 #include <notcurses/notcurses.h>
 
 namespace CursedRay
@@ -34,4 +35,5 @@ namespace CursedRay
     constexpr ncblitter_e DEFAULT_BLITTER{ NCBLIT_1x1 };
     constexpr ncloglevel_e DEFAULT_LOGLEVEL{ NCLOGLEVEL_SILENT };
     constexpr const char* DEFAULT_LOGFILE_NAME{ "CursedRay.log.txt" };
+    constexpr glm::vec4 DEFAULT_CLEAR_COLOR{ glm::vec4(0.2f, 0.2f, 0.3f, 1.0f) };
 }

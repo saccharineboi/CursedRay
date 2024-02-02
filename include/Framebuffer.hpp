@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify
@@ -16,53 +16,54 @@
 
 #pragma once
 
-#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 #include <glm/gtc/epsilon.hpp>
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 namespace CursedRay
 {
     ////////////////////////////////////////
+    struct FramebufferOptions
+    {
+    private:
+        std::uint32_t mWidth;
+        std::uint32_t mHeight;
+        glm::vec4 mClearColor;
+
+    public:
+        FramebufferOptions(std::uint32_t width,
+                           std::uint32_t height,
+                           const glm::vec4& clearColor)
+            : mWidth{width}, mHeight{height}, mClearColor{clearColor} {}
+
+        std::uint32_t GetWidth() const { return mWidth; }
+        std::uint32_t GetHeight() const { return mHeight; }
+        glm::vec4 GetClearColor() const { return mClearColor; }
+    };
+
+    ////////////////////////////////////////
     struct Framebuffer
     {
-        ////////////////////////////////////////
-        Framebuffer(int width, int height);
+    private: 
+        std::vector<std::uint8_t> mData;
+        std::uint32_t mWidth;
+        std::uint32_t mHeight;
 
-        ////////////////////////////////////////
-        ~Framebuffer();
+    public:
+        explicit Framebuffer(const FramebufferOptions& options);
+        Framebuffer(const FramebufferOptions& options, const glm::vec4& gradTop, const glm::vec4& gradBottom);
+        Framebuffer(const FramebufferOptions& options, const glm::vec4& gradTop, const glm::vec4& gradBottom, const glm::vec4& gradLeft, const glm::vec4& gradRight);
 
-        ////////////////////////////////////////
-        Framebuffer(const Framebuffer&);
-        Framebuffer& operator=(const Framebuffer&);
+        std::uint32_t GetWidth() const { return mWidth; }
+        std::uint32_t GetHeight() const { return mHeight; }
+        std::uint32_t GetSizeInBytes() const { return mWidth * mHeight * 4; }
 
-        ////////////////////////////////////////
-        Framebuffer(Framebuffer&&);
-        Framebuffer& operator=(Framebuffer&&);
+        std::int32_t GetWidthSigned() const { return static_cast<std::int32_t>(mWidth); }
+        std::int32_t GetHeightSigned() const { return static_cast<std::int32_t>(mHeight); }
 
-        ////////////////////////////////////////
-        void SetPixel(int row, int col, const glm::vec3& color)
-        {
-            uint32_t red        = (uint32_t)(color[0] * 255.0f);
-            uint32_t green      = (uint32_t)(color[1] * 255.0f);
-            uint32_t blue       = (uint32_t)(color[2] * 255.0f);
-            uint32_t alpha      = 255;
-
-            int index = row * mWidth + col;
-            mColorBuffer[index] = ((alpha << 24) |
-                                   (blue  << 16) |
-                                   (green << 8)  |
-                                   (red   << 0));
-        }
-
-        ////////////////////////////////////////
-        int mWidth;
-        int mHeight;
-        
-        uint32_t* mColorBuffer  = nullptr;
-
-        bool mIsInitialized       = false;
-        std::string mErrorMessage;
+        const std::uint8_t* GetData() const { return mData.data(); }
     };
 }

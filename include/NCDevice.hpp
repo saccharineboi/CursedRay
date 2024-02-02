@@ -1,4 +1,4 @@
-// CursedRay: GPU-accelerated path tracer
+// CursedRay: Hardware-accelerated path tracer
 // Copyright (C) 2024 Omar Huseynov
 //
 // This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,9 @@
 #pragma once
 
 #include "Constants.hpp"
+#include "Framebuffer.hpp"
+
+#include <glm/vec4.hpp>
 
 #include <cstdlib>
 #include <notcurses/notcurses.h>
@@ -38,9 +41,11 @@ namespace CursedRay
         ncblitter_e mBlitter{ DEFAULT_BLITTER };
         ncloglevel_e mLogLevel{ DEFAULT_LOGLEVEL };
         std::string mLogFileName{ DEFAULT_LOGFILE_NAME };
+        glm::vec4 mClearColor{ DEFAULT_CLEAR_COLOR };
 
         const char* GetBlitterName() const;
         const char* GetLogLevelName() const;
+        const char* GetClearColorValues() const;
 
         [[noreturn]] void PrintHelp(char** argv) const;
 
@@ -53,6 +58,7 @@ namespace CursedRay
         ncloglevel_e LogLevel() const { return mLogLevel; }
         std::string LogFileName() const { return mLogFileName; }
         const char* LogFileNameStr() const { return mLogFileName.c_str(); }
+        glm::vec4 ClearColor() const { return mClearColor; }
     };
 
     ////////////////////////////////////////
@@ -70,6 +76,8 @@ namespace CursedRay
 
         std::ofstream mLogFile;
 
+        glm::vec4 mClearColor;
+
     public:
         explicit NCDevice(const NCDeviceOptions& options);
 
@@ -81,6 +89,8 @@ namespace CursedRay
         ~NCDevice();
 
         void Blit(const std::vector<std::uint8_t>& pixels, std::int32_t width, std::int32_t height);
+        void Blit(const Framebuffer& framebuffer);
+
         void Block() const;
         void Log(const char* args, ...);
 
@@ -107,5 +117,9 @@ namespace CursedRay
 
         std::int32_t GetRenderWidthSigned() const { return static_cast<std::int32_t>(mOptions.lenx); }
         std::int32_t GetRenderHeightSigned() const { return static_cast<std::int32_t>(mOptions.leny); }
+
+        float GetRenderOutputRatio() const { return static_cast<float>(mOptions.lenx) / static_cast<float>(mOptions.leny); }
+
+        glm::vec4 GetClearColor() const { return mClearColor; }
     };
 }
