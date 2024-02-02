@@ -65,5 +65,13 @@ namespace CursedRay
         std::int32_t GetNumChannelsSigned() const { return static_cast<std::int32_t>(GetNumChannels()); }
 
         const std::uint8_t* GetData() const { return mData.data(); }
+        void Clear() { mData.clear(); }
+        void PushPixel(std::uint8_t pixel) { mData.push_back(pixel); }
+
+        std::vector<std::uint8_t>::iterator begin() { return mData.begin(); }
+        std::vector<std::uint8_t>::const_iterator cbegin() const { return mData.cbegin(); }
+
+        std::vector<std::uint8_t>::iterator end() { return mData.end(); }
+        std::vector<std::uint8_t>::const_iterator cend() const { return mData.cend(); }
     };
 }

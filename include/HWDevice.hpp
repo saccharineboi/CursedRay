@@ -35,17 +35,20 @@ namespace CursedRay
         std::vector<cl::Device> mDevices;
 
         cl::Program mClearColorProgram;
-        cl::Kernel mClearColorKernel;
 
         cl::Buffer mHWFramebuffer;
+        Framebuffer& mFramebuffer;
 
     public:
-        explicit HWDevice(const Framebuffer& framebuffer);
+        explicit HWDevice(Framebuffer& framebuffer);
 
         HWDevice(const HWDevice&) = delete;
         HWDevice& operator=(const HWDevice&) = delete;
 
         HWDevice(HWDevice&&) = delete;
         HWDevice& operator=(HWDevice&&) = delete;
+
+        cl::Event EnqueueClearColor(const glm::vec4& clearColor);
+        void Finish();
     };
 };

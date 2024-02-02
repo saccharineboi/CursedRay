@@ -33,5 +33,5 @@ namespace CursedRay
 
         glm::vec3 GetPosition() const { return mPosition; }
         float GetFocalLength() const { return mFocalLength; }
-    }
+    };
 }

@@ -42,4 +42,7 @@ namespace CursedRay
 
     ////////////////////////////////////////
     constexpr const char KERNEL_CLEAR_COLOR_PATH[]  { "../kernels/clear_color.cl" };
+
+    ////////////////////////////////////////
+    constexpr const char KERNEL_CLEAR_COLOR_NAME[]  { "clear_color" };
 }

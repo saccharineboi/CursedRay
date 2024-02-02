@@ -38,6 +38,8 @@ int main(int argc, char** argv)
     CursedRay::Framebuffer framebuffer(framebufferOptions);
 
     CursedRay::HWDevice hwDevice(framebuffer);
+    hwDevice.EnqueueClearColor(glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
+    hwDevice.Finish();
 
     ncDevice.Blit(framebuffer);
     ncDevice.Block();

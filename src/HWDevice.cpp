@@ -19,6 +19,8 @@
 #include "Log.hpp"
 #include "Constants.hpp"
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace CursedRay
 {
     ////////////////////////////////////////
@@ -46,15 +48,64 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    HWDevice::HWDevice(const Framebuffer& framebuffer)
+    HWDevice::HWDevice(Framebuffer& framebuffer)
+        : mFramebuffer{ framebuffer }
     {
-        mCtx = cl::Context(CL_DEVICE_TYPE_DEFAULT);
-        mCmdQueue = cl::CommandQueue(mCtx, CL_QUEUE_PROFILING_ENABLE);
-        mDevices.push_back(cl::Device::getDefault());
+        try {
+            mCtx = cl::Context(CL_DEVICE_TYPE_DEFAULT);
+            mCmdQueue = cl::CommandQueue(mCtx, CL_QUEUE_PROFILING_ENABLE);
+            mDevices.push_back(cl::Device::getDefault());
 
-        mClearColorProgram = cl::Program(mCtx, ReadTextFile(KERNEL_CLEAR_COLOR_PATH));
-        BuildProgram(mDevices, mClearColorProgram);
+            mClearColorProgram = cl::Program(mCtx, ReadTextFile(KERNEL_CLEAR_COLOR_PATH));
+            BuildProgram(mDevices, mClearColorProgram);
 
-        mHWFramebuffer = cl::Buffer(mCtx, CL_MEM_READ_WRITE, framebuffer.GetWidth() * framebuffer.GetHeight() * sizeof(float));
+            mHWFramebuffer = cl::Buffer(mCtx, CL_MEM_WRITE_ONLY, mFramebuffer.GetWidth() *
+                                                                                       mFramebuffer.GetHeight() *
+                                                                                       mFramebuffer.GetNumChannels());
+            cl::copy(mCmdQueue, framebuffer.cbegin(), framebuffer.cend(), mHWFramebuffer);
+        }
+        catch (const cl::Error& err) {
+            Log("CursedRay: OpenCL Error: %s", err.what());
+        }
+    }
+
+    ////////////////////////////////////////
+    cl::Event HWDevice::EnqueueClearColor(const glm::vec4& clearColor)
+    {
+        try {
+            cl::Kernel kernel(mClearColorProgram, KERNEL_CLEAR_COLOR_NAME);
+            kernel.setArg(0, mHWFramebuffer);
+            kernel.setArg(1, mFramebuffer.GetWidth());
+            kernel.setArg(2, mFramebuffer.GetHeight());
+            kernel.setArg(3, clearColor.r);
+            kernel.setArg(4, clearColor.g);
+            kernel.setArg(5, clearColor.b);
+            kernel.setArg(6, clearColor.a);
+
+            cl::Event event;
+            mCmdQueue.enqueueNDRangeKernel(kernel,
+                                           cl::NullRange,
+                                           cl::NDRange(mFramebuffer.GetWidth(), mFramebuffer.GetHeight()),
+                                           cl::NullRange,
+                                           nullptr,
+                                           &event);
+            return event;
+        }
+        catch (const cl::Error& err) {
+            Log("CursedRay: OpenCL Error: %s", err.what());
+        }
+        return {};
+    }
+
+    ////////////////////////////////////////
+    void HWDevice::Finish()
+    {
+        try {
+            mCmdQueue.finish();
+            cl::copy(mCmdQueue, mHWFramebuffer, mFramebuffer.begin(), mFramebuffer.end());
+        }
+        catch (const cl::Error& err) {
+            Log("CursedRay: OpenCL Error: %s", err.what());
+        }
     }
 }
