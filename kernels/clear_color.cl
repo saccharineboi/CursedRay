@@ -1,25 +1,15 @@
-// CursedRay: Hardware-accelerated path tracer
-// Copyright (C) 2024 Omar Huseynov
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// clear out the framebuffer
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-__kernel void clear_color(__global float* out, float4 clearColor, uint colSizeInBytes)
+__kernel void clear_color(__global uchar4* framebuffer,
+                          uint width, uint height,
+                          float r, float g, float b, float a)
 {
-    uint row     = get_global_id(0);
-    uint col     = get_global_id(1);
-    uint channel = get_global_id(2);
+    uint x = get_global_id(0);
+    uint y = get_global_id(1);
 
-    out[row * colSizeInBytes + col + channel] = clearColor[channel];
+    if (x < width && y < height) {
+        uint index = y * width + x;
+        framebuffer[index] = (uchar4)((uchar)(r * 255.0f), (uchar)(g * 255.0f), (uchar)(b * 255.0f), (uchar)(a * 255.0f));
+    }
 }
