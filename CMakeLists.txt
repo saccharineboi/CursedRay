@@ -48,9 +48,14 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -march=native -mtune=native -flto -DNDEBUG")
 
 set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/CursedRay.cpp
                     ${CMAKE_SOURCE_DIR}/src/Framebuffer.cpp
+                    ${CMAKE_SOURCE_DIR}/src/HWDevice.cpp
+                    ${CMAKE_SOURCE_DIR}/src/Log.cpp
                     ${CMAKE_SOURCE_DIR}/src/NCDevice.cpp)
 
 set(HEADER_FILES    ${CMAKE_SOURCE_DIR}/include/Framebuffer.hpp
+                    ${CMAKE_SOURCE_DIR}/include/Camera.hpp
+                    ${CMAKE_SOURCE_DIR}/include/HWDevice.hpp
+                    ${CMAKE_SOURCE_DIR}/include/Log.hpp
                     ${CMAKE_SOURCE_DIR}/include/NCDevice.hpp)
 
 include_directories (
@@ -58,6 +63,6 @@ include_directories (
     "${CMAKE_SOURCE_DIR}/submodules/glm"
 )
 
-set(LIBS ${LIBS} notcurses notcurses-core m pthread)
+set(LIBS ${LIBS} notcurses notcurses-core m pthread OpenCL)
 add_executable(cray ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(cray PUBLIC ${LIBS})
