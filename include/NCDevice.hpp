@@ -76,8 +76,6 @@ namespace CursedRay
 
         std::ofstream mLogFile;
 
-        glm::vec4 mClearColor;
-
     public:
         explicit NCDevice(const NCDeviceOptions& options);
 
@@ -119,7 +117,5 @@ namespace CursedRay
         std::int32_t GetRenderHeightSigned() const { return static_cast<std::int32_t>(mOptions.leny); }
 
         float GetRenderOutputRatio() const { return static_cast<float>(mOptions.lenx) / static_cast<float>(mOptions.leny); }
-
-        glm::vec4 GetClearColor() const { return mClearColor; }
     };
 }

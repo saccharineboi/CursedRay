@@ -47,22 +47,11 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -D_DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -march=native -mtune=native -flto -DNDEBUG")
 
 set(SOURCE_FILES    ${CMAKE_SOURCE_DIR}/src/CursedRay.cpp
-                    ${CMAKE_SOURCE_DIR}/src/Sphere.cpp
-                    ${CMAKE_SOURCE_DIR}/src/Camera.cpp
-                    ${CMAKE_SOURCE_DIR}/src/Scene.cpp
                     ${CMAKE_SOURCE_DIR}/src/Framebuffer.cpp
-                    ${CMAKE_SOURCE_DIR}/src/NCDevice.cpp
-                    ${CMAKE_SOURCE_DIR}/src/Material.cpp)
+                    ${CMAKE_SOURCE_DIR}/src/NCDevice.cpp)
 
-set(HEADER_FILES    ${CMAKE_SOURCE_DIR}/include/Ray.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Hit.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Sphere.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Random.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Camera.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Scene.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Framebuffer.hpp
-                    ${CMAKE_SOURCE_DIR}/include/NCDevice.hpp
-                    ${CMAKE_SOURCE_DIR}/include/Material.hpp)
+set(HEADER_FILES    ${CMAKE_SOURCE_DIR}/include/Framebuffer.hpp
+                    ${CMAKE_SOURCE_DIR}/include/NCDevice.hpp)
 
 include_directories (
     "${CMAKE_SOURCE_DIR}/include"

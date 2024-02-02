@@ -330,8 +330,7 @@ namespace CursedRay
           mWidth{}, mHeight{},
           mPixelsWidth{}, mPixelsHeight{},
           mCellWidth{}, mCellHeight{},
-          mLogFile{options.LogFileName(), std::ios_base::out | std::ios_base::ate},
-          mClearColor{ options.ClearColor() }
+          mLogFile{options.LogFileName(), std::ios_base::out | std::ios_base::ate}
     {
         if (!setlocale(LC_ALL, "")) {
             std::fprintf(stderr, "CursedRay: coudn't set locale");

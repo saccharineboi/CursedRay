@@ -33,8 +33,7 @@ int main(int argc, char** argv)
 
     CursedRay::FramebufferOptions framebufferOptions(device.GetRenderWidth(),
                                                      device.GetRenderHeight(),
-                                                     device.GetClearColor());
-
+                                                     deviceOptions.ClearColor());
     CursedRay::Framebuffer framebuffer(framebufferOptions);
 
     device.Blit(framebuffer);
