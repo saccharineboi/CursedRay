@@ -26,7 +26,7 @@ namespace CursedRay
         : mWidth{options.GetWidth()}, mHeight{options.GetHeight()}
     {
         glm::vec4 clearColor{ options.GetClearColor() };
-        mData.reserve(mWidth * mHeight * 4);
+        mData.reserve(mWidth * mHeight * GetNumChannels());
         for (std::uint32_t row{}; row < mHeight; ++row) {
             for (std::uint32_t col{}; col < mWidth; ++col) {
                 std::uint8_t redChannel{ static_cast<std::uint8_t>(clearColor.r * 255.0f) };

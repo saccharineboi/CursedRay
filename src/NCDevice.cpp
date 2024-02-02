@@ -272,7 +272,8 @@ namespace CursedRay
     ////////////////////////////////////////
     void NCDevice::Blit(const Framebuffer& framebuffer)
     {
-        if (ncblit_rgba(framebuffer.GetData(), framebuffer.GetWidthSigned() * 4, &mOptions) < 0) {
+        assert(framebuffer.GetNumChannels() == 4 && "the number of channels in a given framebuffer must equal 4");
+        if (ncblit_rgba(framebuffer.GetData(), framebuffer.GetWidthSigned() * framebuffer.GetNumChannelsSigned(), &mOptions) < 0) {
             Log("CursedRay: error in ncblit_rgba, framebuffer %p", &framebuffer);
             notcurses_stop(mContext);
             std::exit(EXIT_FAILURE);

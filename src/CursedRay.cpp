@@ -32,12 +32,12 @@ int main(int argc, char** argv)
     CursedRay::NCDeviceOptions ncDeviceOptions(argc, argv);
     CursedRay::NCDevice ncDevice(ncDeviceOptions);
 
-    CursedRay::HWDevice hwDevice;
-
     CursedRay::FramebufferOptions framebufferOptions(ncDevice.GetRenderWidth(),
                                                      ncDevice.GetRenderHeight(),
                                                      ncDeviceOptions.ClearColor());
     CursedRay::Framebuffer framebuffer(framebufferOptions);
+
+    CursedRay::HWDevice hwDevice(framebuffer);
 
     ncDevice.Blit(framebuffer);
     ncDevice.Block();

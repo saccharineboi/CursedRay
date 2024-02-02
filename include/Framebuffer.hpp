@@ -57,10 +57,12 @@ namespace CursedRay
 
         std::uint32_t GetWidth() const { return mWidth; }
         std::uint32_t GetHeight() const { return mHeight; }
-        std::uint32_t GetSizeInBytes() const { return mWidth * mHeight * 4; }
+        std::uint32_t GetSizeInBytes() const { return mWidth * mHeight * GetNumChannels(); }
+        std::uint32_t GetNumChannels() const { return 4; }
 
         std::int32_t GetWidthSigned() const { return static_cast<std::int32_t>(mWidth); }
         std::int32_t GetHeightSigned() const { return static_cast<std::int32_t>(mHeight); }
+        std::int32_t GetNumChannelsSigned() const { return static_cast<std::int32_t>(GetNumChannels()); }
 
         const std::uint8_t* GetData() const { return mData.data(); }
     };

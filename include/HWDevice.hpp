@@ -40,7 +40,7 @@ namespace CursedRay
         cl::Buffer mHWFramebuffer;
 
     public:
-        HWDevice();
+        explicit HWDevice(const Framebuffer& framebuffer);
 
         HWDevice(const HWDevice&) = delete;
         HWDevice& operator=(const HWDevice&) = delete;

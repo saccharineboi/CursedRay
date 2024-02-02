@@ -46,7 +46,7 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    HWDevice::HWDevice()
+    HWDevice::HWDevice(const Framebuffer& framebuffer)
     {
         mCtx = cl::Context(CL_DEVICE_TYPE_DEFAULT);
         mCmdQueue = cl::CommandQueue(mCtx, CL_QUEUE_PROFILING_ENABLE);
@@ -55,5 +55,6 @@ namespace CursedRay
         mClearColorProgram = cl::Program(mCtx, ReadTextFile(KERNEL_CLEAR_COLOR_PATH));
         BuildProgram(mDevices, mClearColorProgram);
 
+        mHWFramebuffer = cl::Buffer(mCtx, CL_MEM_READ_WRITE, framebuffer.GetWidth() * framebuffer.GetHeight() * sizeof(float));
     }
 }
