@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <notcurses/notcurses.h>
 
@@ -36,4 +37,6 @@ namespace CursedRay
     constexpr ncloglevel_e DEFAULT_LOGLEVEL{ NCLOGLEVEL_SILENT };
     constexpr const char* DEFAULT_LOGFILE_NAME{ "CursedRay.log.txt" };
     constexpr glm::vec4 DEFAULT_CLEAR_COLOR{ glm::vec4(0.2f, 0.2f, 0.3f, 1.0f) };
+    constexpr glm::vec3 DEFAULT_CAMERA_POSITION{ glm::vec3(0.0f, 0.0f, 0.0f) };
+    constexpr float DEFAULT_CAMERA_FOCAL_LENGTH{ 1.0f };
 }

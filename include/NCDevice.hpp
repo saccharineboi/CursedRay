@@ -56,8 +56,6 @@ namespace CursedRay
         bool SuppressBanners() const { return mSuppressBanners; }
         ncblitter_e Blitter() const { return mBlitter; }
         ncloglevel_e LogLevel() const { return mLogLevel; }
-        std::string LogFileName() const { return mLogFileName; }
-        const char* LogFileNameStr() const { return mLogFileName.c_str(); }
         glm::vec4 ClearColor() const { return mClearColor; }
     };
 
@@ -74,8 +72,6 @@ namespace CursedRay
         std::uint32_t mPixelsWidth, mPixelsHeight;
         std::uint32_t mCellWidth, mCellHeight;
 
-        std::ofstream mLogFile;
-
     public:
         explicit NCDevice(const NCDeviceOptions& options);
 
@@ -88,9 +84,7 @@ namespace CursedRay
 
         void Blit(const std::vector<std::uint8_t>& pixels, std::int32_t width, std::int32_t height);
         void Blit(const Framebuffer& framebuffer);
-
         void Block() const;
-        void Log(const char* args, ...);
 
         std::uint32_t GetWidth() const { return mWidth; }
         std::uint32_t GetHeight() const { return mHeight; }
