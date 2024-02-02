@@ -23,20 +23,23 @@
 namespace CursedRay
 {
     ////////////////////////////////////////
-    constexpr int CURSEDRAY_VERSION_MAJOR{ 0 };
-    constexpr int CURSEDRAY_VERSION_MINOR{ 1 };
-    constexpr int CURSEDRAY_VERSION_PATCH{ 0 };
+    constexpr int CURSEDRAY_VERSION_MAJOR           { 0 };
+    constexpr int CURSEDRAY_VERSION_MINOR           { 1 };
+    constexpr int CURSEDRAY_VERSION_PATCH           { 0 };
 
     ////////////////////////////////////////
-    constexpr int DEFAULT_ARG_STR_LEN{ 20 };
+    constexpr int DEFAULT_ARG_STR_LEN               { 20 };
 
     ////////////////////////////////////////
-    constexpr bool DEFAULT_NO_ALTERNATE_SCREEN{ true };
-    constexpr bool DEFAULT_SUPPRESS_BANNERS{ true };
-    constexpr ncblitter_e DEFAULT_BLITTER{ NCBLIT_1x1 };
-    constexpr ncloglevel_e DEFAULT_LOGLEVEL{ NCLOGLEVEL_SILENT };
-    constexpr const char* DEFAULT_LOGFILE_NAME{ "CursedRay.log.txt" };
-    constexpr glm::vec4 DEFAULT_CLEAR_COLOR{ glm::vec4(0.2f, 0.2f, 0.3f, 1.0f) };
-    constexpr glm::vec3 DEFAULT_CAMERA_POSITION{ glm::vec3(0.0f, 0.0f, 0.0f) };
-    constexpr float DEFAULT_CAMERA_FOCAL_LENGTH{ 1.0f };
+    constexpr bool DEFAULT_NO_ALTERNATE_SCREEN      { true };
+    constexpr bool DEFAULT_SUPPRESS_BANNERS         { true };
+    constexpr ncblitter_e DEFAULT_BLITTER           { NCBLIT_1x1 };
+    constexpr ncloglevel_e DEFAULT_LOGLEVEL         { NCLOGLEVEL_SILENT };
+    constexpr const char DEFAULT_LOGFILE_NAME[]     { "cray.log" };
+    constexpr glm::vec4 DEFAULT_CLEAR_COLOR         { glm::vec4(0.2f, 0.2f, 0.3f, 1.0f) };
+    constexpr glm::vec3 DEFAULT_CAMERA_POSITION     { glm::vec3(0.0f, 0.0f, 0.0f) };
+    constexpr float DEFAULT_CAMERA_FOCAL_LENGTH     { 1.0f };
+
+    ////////////////////////////////////////
+    constexpr const char KERNEL_CLEAR_COLOR_PATH[]  { "../kernels/clear_color.cl" };
 }

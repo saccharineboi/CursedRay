@@ -21,7 +21,5 @@ __kernel void clear_color(__global float* out, float4 clearColor, uint colSizeIn
     uint col     = get_global_id(1);
     uint channel = get_global_id(2);
 
-blah
-
     out[row * colSizeInBytes + col + channel] = clearColor[channel];
 }

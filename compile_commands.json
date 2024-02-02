@@ -1,44 +1,32 @@
 [
 {
   "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/main.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/main.cpp",
-  "file": "/home/saccharineboi/Desktop/CursedRay/src/main.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/main.cpp.o"
+  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -g -D_DEBUG -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cray.dir/src/CursedRay.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/CursedRay.cpp",
+  "file": "/home/saccharineboi/Desktop/CursedRay/src/CursedRay.cpp",
+  "output": "CMakeFiles/cray.dir/src/CursedRay.cpp.o"
 },
 {
   "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/Sphere.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Sphere.cpp",
-  "file": "/home/saccharineboi/Desktop/CursedRay/src/Sphere.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/Sphere.cpp.o"
-},
-{
-  "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/Camera.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Camera.cpp",
-  "file": "/home/saccharineboi/Desktop/CursedRay/src/Camera.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/Camera.cpp.o"
-},
-{
-  "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/Scene.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Scene.cpp",
-  "file": "/home/saccharineboi/Desktop/CursedRay/src/Scene.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/Scene.cpp.o"
-},
-{
-  "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/Framebuffer.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Framebuffer.cpp",
+  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -g -D_DEBUG -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cray.dir/src/Framebuffer.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Framebuffer.cpp",
   "file": "/home/saccharineboi/Desktop/CursedRay/src/Framebuffer.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/Framebuffer.cpp.o"
+  "output": "CMakeFiles/cray.dir/src/Framebuffer.cpp.o"
 },
 {
   "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/NCDevice.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/NCDevice.cpp",
+  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -g -D_DEBUG -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cray.dir/src/HWDevice.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/HWDevice.cpp",
+  "file": "/home/saccharineboi/Desktop/CursedRay/src/HWDevice.cpp",
+  "output": "CMakeFiles/cray.dir/src/HWDevice.cpp.o"
+},
+{
+  "directory": "/home/saccharineboi/Desktop/CursedRay/build",
+  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -g -D_DEBUG -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cray.dir/src/Log.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Log.cpp",
+  "file": "/home/saccharineboi/Desktop/CursedRay/src/Log.cpp",
+  "output": "CMakeFiles/cray.dir/src/Log.cpp.o"
+},
+{
+  "directory": "/home/saccharineboi/Desktop/CursedRay/build",
+  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -g -D_DEBUG -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cray.dir/src/NCDevice.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/NCDevice.cpp",
   "file": "/home/saccharineboi/Desktop/CursedRay/src/NCDevice.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/NCDevice.cpp.o"
-},
-{
-  "directory": "/home/saccharineboi/Desktop/CursedRay/build",
-  "command": "/usr/bin/c++  -I/home/saccharineboi/Desktop/CursedRay/include -I/home/saccharineboi/Desktop/CursedRay/submodules/glm -std=gnu++20 -Wall -Wextra -Werror -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wswitch-enum -Wcast-qual -Wconversion -Wduplicated-cond -Wnon-virtual-dtor -Woverloaded-virtual -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wformat=2 -Wno-unused-parameter -Wunused -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wredundant-decls -Wstack-protector -Wstrict-null-sentinel -Wdisabled-optimization -fno-rtti -Wno-suggest-attribute=format -DGLM_ENABLE_EXPERIMENTAL -o CMakeFiles/cursedray.dir/src/Material.cpp.o -c /home/saccharineboi/Desktop/CursedRay/src/Material.cpp",
-  "file": "/home/saccharineboi/Desktop/CursedRay/src/Material.cpp",
-  "output": "CMakeFiles/cursedray.dir/src/Material.cpp.o"
+  "output": "CMakeFiles/cray.dir/src/NCDevice.cpp.o"
 }
 ]

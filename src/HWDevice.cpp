@@ -17,6 +17,7 @@
 #include "HWDevice.hpp"
 #include "IO.hpp"
 #include "Log.hpp"
+#include "Constants.hpp"
 
 namespace CursedRay
 {
@@ -33,7 +34,10 @@ namespace CursedRay
                     if (status == CL_BUILD_ERROR) {
                         std::string deviceName{ device.getInfo<CL_DEVICE_NAME>() };
                         std::string buildLog{ program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device) };
-                        std::string message{ deviceName + ':' + buildLog };
+                        std::string message{ "CursedRay: " };
+                        message.append(deviceName);
+                        message.append(":");
+                        message.append(buildLog);
                         Log(message.c_str());
                     }
                 }
@@ -48,7 +52,8 @@ namespace CursedRay
         mCmdQueue = cl::CommandQueue(mCtx, CL_QUEUE_PROFILING_ENABLE);
         mDevices.push_back(cl::Device::getDefault());
 
-        mClearColorProgram = cl::Program(mCtx, ReadTextFile("../kernels/clear_color.cl"));
+        mClearColorProgram = cl::Program(mCtx, ReadTextFile(KERNEL_CLEAR_COLOR_PATH));
         BuildProgram(mDevices, mClearColorProgram);
+
     }
 }

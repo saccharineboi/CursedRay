@@ -26,7 +26,7 @@ namespace CursedRay
     {
         std::string allLines;
         if (std::ifstream fp{ url }) {
-            for (std::string currentLine; std::getline(fp, currentLine); allLines.append(currentLine))
+            for (std::string currentLine; std::getline(fp, currentLine); allLines.append(currentLine + '\n'))
                 ;
         }
         return allLines;

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "Log.hpp"
+#include "Constants.hpp"
 
 #include <ctime>
 #include <cstdarg>
@@ -35,7 +36,7 @@ namespace CursedRay
         std::tm timeInfo{};
 
         if (!logFile.is_open()) {
-            logFile = std::ofstream{"cray.log", std::ios_base::out | std::ios_base::ate};
+            logFile = std::ofstream{DEFAULT_LOGFILE_NAME, std::ios_base::out | std::ios_base::ate};
         }
 
 #ifdef __unix__
