@@ -5,22 +5,22 @@ CursedRay is a hardware-accelerated path tracer that uses the OpenCL (version: 3
 ## Usage
 
 ```
---help:			 Print this help message
---version:		 Print the version number
---license:		 Print the license
---clear-on-exit:	 Clear the terminal on exit
+--help:                  Print this help message
+--version:               Print the version number
+--license:               Print the license
+--clear-on-exit:         Clear the terminal on exit
                          Default is '0'
 --dont-suppress-banners: Don't suppress notcurses' banners
                          Default is '1'
---blitter:		 Blitter to use
+--blitter:               Blitter to use
                          Valid values are '1x1', '2x1', '2x2', '3x2', and 'pixel'
                          Default is '1x1'
---log-level:		 Log level to use
+--log-level:             Log level to use
                          Valid values are 'fatal', 'error', 'panic', 'debug',
                          'info', 'warning', 'silent', 'trace', and 'verbose'
                          Default is 'silent'
---log-file:		 Log file to write logs to
-                         Default is 'CursedRay.log.txt'
+--clear-color:           Set background color
+                         Default is '(0.200000, 0.200000, 0.300000, 1.000000)'
 ```
 
 ## Features
