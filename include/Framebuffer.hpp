@@ -54,8 +54,6 @@ namespace CursedRay
 
     public:
         explicit Framebuffer(const FramebufferOptions& options);
-        Framebuffer(const FramebufferOptions& options, const glm::vec4& gradTop, const glm::vec4& gradBottom);
-        Framebuffer(const FramebufferOptions& options, const glm::vec4& gradTop, const glm::vec4& gradBottom, const glm::vec4& gradLeft, const glm::vec4& gradRight);
 
         std::uint32_t GetWidth() const { return mWidth; }
         std::uint32_t GetHeight() const { return mHeight; }

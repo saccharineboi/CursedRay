@@ -333,8 +333,7 @@ namespace CursedRay
           mLogFile{options.LogFileName(), std::ios_base::out | std::ios_base::ate},
           mClearColor{ options.ClearColor() }
     {
-        if (!setlocale(LC_ALL, ""))
-        {
+        if (!setlocale(LC_ALL, "")) {
             std::fprintf(stderr, "CursedRay: coudn't set locale");
             std::exit(EXIT_FAILURE);
         }
@@ -348,8 +347,7 @@ namespace CursedRay
         mContextOptions.loglevel = options.LogLevel();
 
         mContext = notcurses_init(&mContextOptions, nullptr);
-        if (!mContext)
-        {
+        if (!mContext) {
             std::fprintf(stderr, "CursedRay: couldn't initialize notcurses");
             std::exit(EXIT_FAILURE);
         }
@@ -363,36 +361,31 @@ namespace CursedRay
         Log("CursedRay: dimensions of each cell: %u:%u", mCellWidth, mCellHeight);
 
         ncblitter_e blitter{};
-        if (options.Blitter() == NCBLIT_PIXEL && notcurses_canpixel(mContext))
-        {
+        if (options.Blitter() == NCBLIT_PIXEL && notcurses_canpixel(mContext)) {
             blitter = NCBLIT_PIXEL;
             mOptions.leny = mPixelsHeight;
             mOptions.lenx = mPixelsWidth;
             Log("CursedRay: can blit in pixels");
         }
-        else if (options.Blitter() == NCBLIT_3x2 && notcurses_cansextant(mContext))
-        {
+        else if (options.Blitter() == NCBLIT_3x2 && notcurses_cansextant(mContext)) {
             blitter = NCBLIT_3x2;
             mOptions.leny = mHeight * 3;
             mOptions.lenx = mWidth * 2;
             Log("CursedRay: can blit in sextants");
         }
-        else if (options.Blitter() == NCBLIT_2x2 && notcurses_canquadrant(mContext))
-        {
+        else if (options.Blitter() == NCBLIT_2x2 && notcurses_canquadrant(mContext)) {
             blitter = NCBLIT_2x2;
             mOptions.leny = mHeight * 2;
             mOptions.lenx = mWidth * 2;
             Log("CursedRay: can blit in quadrants");
         }
-        else if (options.Blitter() == NCBLIT_2x1 && notcurses_canhalfblock(mContext))
-        {
+        else if (options.Blitter() == NCBLIT_2x1 && notcurses_canhalfblock(mContext)) {
             blitter = NCBLIT_2x1;
             mOptions.leny = mHeight * 2;
             mOptions.lenx = mWidth;
             Log("CursedRay: can blit in halves");
         }
-        else if (options.Blitter() == NCBLIT_1x1)
-        {
+        else if (options.Blitter() == NCBLIT_1x1) {
             blitter = NCBLIT_1x1;
             mOptions.leny = mHeight;
             mOptions.lenx = mWidth;
