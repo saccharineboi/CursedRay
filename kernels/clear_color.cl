@@ -10,6 +10,12 @@ __kernel void clear_color(__global uchar4* framebuffer,
 
     if (x < width && y < height) {
         uint index = y * width + x;
-        framebuffer[index] = (uchar4)((uchar)(r * 255.0f), (uchar)(g * 255.0f), (uchar)(b * 255.0f), (uchar)(a * 255.0f));
+
+        uchar red = (uchar)(r * 255.0f);
+        uchar green = (uchar)(g * 255.0f);
+        uchar blue = (uchar)(b * 255.0f);
+        uchar alpha = (uchar)(a * 255.0f);
+
+        framebuffer[index] = (uchar4)(red, green, blue, alpha);
     }
 }

@@ -70,7 +70,8 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    cl::Event HWDevice::EnqueueClearColor(const glm::vec4& clearColor)
+    std::vector<cl::Event> HWDevice::EnqueueClearColor(const glm::vec4& clearColor,
+                                                       const std::vector<cl::Event>& events)
     {
         try {
             cl::Kernel kernel(mClearColorProgram, KERNEL_CLEAR_COLOR_NAME);
@@ -87,14 +88,42 @@ namespace CursedRay
                                            cl::NullRange,
                                            cl::NDRange(mFramebuffer.GetWidth(), mFramebuffer.GetHeight()),
                                            cl::NullRange,
-                                           nullptr,
+                                           &events,
                                            &event);
-            return event;
+            return { event };
         }
         catch (const cl::Error& err) {
             Log("CursedRay: OpenCL Error: %s", err.what());
         }
         return {};
+    }
+
+    ////////////////////////////////////////
+    double HWDevice::Profile(const cl::Event& event) const
+    {
+        ulong hwBegin{ event.getProfilingInfo<CL_PROFILING_COMMAND_START>() };
+        ulong hwEnd{ event.getProfilingInfo<CL_PROFILING_COMMAND_END>() };
+        return static_cast<double>(hwEnd - hwBegin);
+    }
+
+    ////////////////////////////////////////
+    void HWDevice::LogProfile(const cl::Event& event) const
+    {
+        ulong hwBegin{ event.getProfilingInfo<CL_PROFILING_COMMAND_START>() };
+        ulong hwEnd{ event.getProfilingInfo<CL_PROFILING_COMMAND_END>() };
+        double timePassed{ static_cast<double>(hwEnd - hwBegin) };
+        Log("CursedRay: kernel runtime was %f milliseconds", timePassed * 1e-6);
+    }
+
+    ////////////////////////////////////////
+    void HWDevice::LogProfile(const std::vector<cl::Event>& events) const
+    {
+        for (const cl::Event& event : events) {
+            ulong hwBegin{ event.getProfilingInfo<CL_PROFILING_COMMAND_START>() };
+            ulong hwEnd{ event.getProfilingInfo<CL_PROFILING_COMMAND_END>() };
+            double timePassed{ static_cast<double>(hwEnd - hwBegin) };
+            Log("CursedRay: kernel runtime was %f milliseconds", timePassed * 1e-6);
+        }
     }
 
     ////////////////////////////////////////

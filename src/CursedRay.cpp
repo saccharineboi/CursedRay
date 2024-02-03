@@ -17,6 +17,7 @@
 #include "NCDevice.hpp"
 #include "HWDevice.hpp"
 #include "Framebuffer.hpp"
+#include "Log.hpp"
 
 #include <glm/common.hpp>
 
@@ -38,8 +39,10 @@ int main(int argc, char** argv)
     CursedRay::Framebuffer framebuffer(framebufferOptions);
 
     CursedRay::HWDevice hwDevice(framebuffer);
-    hwDevice.EnqueueClearColor(glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
+    auto events{ hwDevice.EnqueueClearColor(glm::vec4(0.5f, 0.0f, 0.5f, 1.0f)) };
     hwDevice.Finish();
+
+    hwDevice.LogProfile(events);
 
     ncDevice.Blit(framebuffer);
     ncDevice.Block();

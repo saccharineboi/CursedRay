@@ -48,7 +48,12 @@ namespace CursedRay
         HWDevice(HWDevice&&) = delete;
         HWDevice& operator=(HWDevice&&) = delete;
 
-        cl::Event EnqueueClearColor(const glm::vec4& clearColor);
+        std::vector<cl::Event> EnqueueClearColor(const glm::vec4& clearColor,
+                                                 const std::vector<cl::Event>& events = {});
+        double Profile(const cl::Event& event) const;
+        void LogProfile(const cl::Event& event) const;
+        void LogProfile(const std::vector<cl::Event>& events) const;
+
         void Finish();
     };
 };
