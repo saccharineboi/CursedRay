@@ -19,8 +19,13 @@ CursedRay is a hardware-accelerated path tracer that uses the OpenCL (version: 3
                          Valid values are 'fatal', 'error', 'panic', 'debug',
                          'info', 'warning', 'silent', 'trace', and 'verbose'
                          Default is 'silent'
+--dump-logs:             Dump logs to stdout at the end
 --clear-color:           Set background color
                          Default is '(0.200000, 0.200000, 0.300000, 1.000000)'
+--device-type:           Type of the OpenCL device
+                         Valid values are 'cpu', 'gpu',
+                         'accelerator', and 'default'
+                         Default is 'default'
 ```
 
 ## Features
