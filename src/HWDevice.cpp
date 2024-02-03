@@ -15,9 +15,11 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "HWDevice.hpp"
+#include "HWDeviceOptions.hpp"
 #include "IO.hpp"
 #include "Log.hpp"
 #include "Constants.hpp"
+#include "Framebuffer.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -48,11 +50,11 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
-    HWDevice::HWDevice(Framebuffer& framebuffer)
+    HWDevice::HWDevice(Framebuffer& framebuffer, const HWDeviceOptions& options)
         : mFramebuffer{ framebuffer }
     {
         try {
-            mCtx = cl::Context(CL_DEVICE_TYPE_DEFAULT);
+            mCtx = cl::Context(options.mDeviceType);
             mCmdQueue = cl::CommandQueue(mCtx, CL_QUEUE_PROFILING_ENABLE);
             mDevices.push_back(cl::Device::getDefault());
 

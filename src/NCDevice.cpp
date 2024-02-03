@@ -83,6 +83,26 @@ namespace CursedRay
     }
 
     ////////////////////////////////////////
+    const char* NCDeviceOptions::GetDeviceTypeName() const
+    {
+        switch (mHWOptions.mDeviceType) {
+            case CL_DEVICE_TYPE_ACCELERATOR:
+                return "accelerator";
+            case CL_DEVICE_TYPE_CPU:
+                return "cpu";
+            case CL_DEVICE_TYPE_GPU:
+                return "gpu";
+            case CL_DEVICE_TYPE_CUSTOM:
+                return "custom";
+            case CL_DEVICE_TYPE_ALL:
+                return "all";
+            case CL_DEVICE_TYPE_DEFAULT:
+                return "default";
+        }
+        return "unknown";
+    }
+
+    ////////////////////////////////////////
     const char* NCDeviceOptions::GetClearColorValues() const
     {
         static std::string colorInStr;
@@ -116,7 +136,9 @@ namespace CursedRay
         std::printf("\t--dont-suppress-banners: Don't suppress notcurses' banners\n\t\t\t\t Default is '%d'\n", DEFAULT_SUPPRESS_BANNERS);
         std::printf("\t--blitter:\t\t Blitter to use\n\t\t\t\t Valid values are '1x1', '2x1', '2x2', '3x2',\n\t\t\t\t and 'pixel'\n\t\t\t\t Default is '%s'\n", GetBlitterName());
         std::printf("\t--log-level:\t\t Log level to use\n\t\t\t\t Valid values are 'fatal', 'error', 'panic',\n\t\t\t\t 'debug', 'info', 'warning', 'silent',\n\t\t\t\t 'trace', and 'verbose'\n\t\t\t\t Default is '%s'\n", GetLogLevelName());
+        std::printf("\t--dump-logs:\t\t Dump logs to stdout at the end\n");
         std::printf("\t--clear-color:\t\t Set background color\n\t\t\t\t Default is '%s'\n", GetClearColorValues());
+        std::printf("\t--device-type:\t\t Type of the OpenCL device\n\t\t\t\t Valid values are 'cpu', 'gpu',\n\t\t\t\t 'accelerator', and 'default'\n\t\t\t\t Default is '%s'\n", GetDeviceTypeName());
         std::exit(EXIT_SUCCESS);
     }
 
@@ -246,6 +268,35 @@ namespace CursedRay
                 mClearColor.a = std::clamp(alphaChannel, 0.0f, 1.0f);
                 i += 4;
             }
+            else if (!std::strncmp("--device-type", argv[i], DEFAULT_ARG_STR_LEN)) {
+                if (i == argc - 1) {
+                    std::fprintf(stderr, "%s: --device-type requires 1 argument\n", argv[0]);
+                    std::exit(EXIT_FAILURE);
+                }
+                if (!std::strncmp("cpu", argv[i + 1], DEFAULT_ARG_STR_LEN)) {
+                    mHWOptions.mDeviceType = CL_DEVICE_TYPE_CPU;
+                    ++i;
+                }
+                else if (!std::strncmp("gpu", argv[i + 1], DEFAULT_ARG_STR_LEN)) {
+                    mHWOptions.mDeviceType = CL_DEVICE_TYPE_GPU;
+                    ++i;
+                }
+                else if (!std::strncmp("accelerator", argv[i + 1], DEFAULT_ARG_STR_LEN)) {
+                    mHWOptions.mDeviceType = CL_DEVICE_TYPE_ACCELERATOR;
+                    ++i;
+                }
+                else if (!std::strncmp("default", argv[i + 1], DEFAULT_ARG_STR_LEN)) {
+                    mHWOptions.mDeviceType = CL_DEVICE_TYPE_DEFAULT;
+                    ++i;
+                }
+                else {
+                    std::fprintf(stderr, "%s: %s is an invalid device type\n", argv[0], argv[i + 1]);
+                    std::exit(EXIT_FAILURE);
+                }
+            }
+            else if (!std::strncmp("--dump-logs", argv[i], DEFAULT_ARG_STR_LEN)) {
+                mDumpLogs = true;
+            }
             else {
                 std::fprintf(stderr, "%s: %s is an invalid option\n", argv[0], argv[i]);
                 PrintHelp(argv);
@@ -298,7 +349,8 @@ namespace CursedRay
         : mContext{}, mPlane{}, mOptions{}, mContextOptions{},
           mWidth{}, mHeight{},
           mPixelsWidth{}, mPixelsHeight{},
-          mCellWidth{}, mCellHeight{}
+          mCellWidth{}, mCellHeight{},
+          mDumpLogs{ options.DumpLogs() }
     {
         if (!setlocale(LC_ALL, "")) {
             std::fprintf(stderr, "CursedRay: coudn't set locale");
@@ -374,5 +426,13 @@ namespace CursedRay
     NCDevice::~NCDevice()
     {
         notcurses_stop(mContext);
+        if (mDumpLogs) {
+            std::string all;
+            if (std::ifstream fp{ DEFAULT_LOGFILE_NAME }) {
+                for (std::string current; std::getline(fp, current); all.append(current + '\n'))
+                    ;
+            }
+            std::fprintf(stdout, "%s", all.c_str());
+        }
     }
 }

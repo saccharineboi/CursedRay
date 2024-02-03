@@ -16,16 +16,21 @@
 
 #pragma once
 
-#include "Framebuffer.hpp"
+#include "HWDeviceOptions.hpp"
 
 #define CL_HPP_ENABLE_EXCEPTIONS
 #define CL_HPP_TARGET_OPENCL_VERSION 300
 #include <CL/opencl.hpp>
 
 #include <vector>
+#include <glm/vec4.hpp>
+#include <glm/gtc/epsilon.hpp>
 
 namespace CursedRay
 {
+    ////////////////////////////////////////
+    struct Framebuffer;
+
     ////////////////////////////////////////
     struct HWDevice
     {
@@ -40,7 +45,7 @@ namespace CursedRay
         Framebuffer& mFramebuffer;
 
     public:
-        explicit HWDevice(Framebuffer& framebuffer);
+        HWDevice(Framebuffer& framebuffer, const HWDeviceOptions&);
 
         HWDevice(const HWDevice&) = delete;
         HWDevice& operator=(const HWDevice&) = delete;

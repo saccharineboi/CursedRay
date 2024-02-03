@@ -17,7 +17,7 @@
 #pragma once
 
 #include "Constants.hpp"
-#include "Framebuffer.hpp"
+#include "HWDeviceOptions.hpp"
 
 #include <glm/vec4.hpp>
 
@@ -33,19 +33,32 @@
 namespace CursedRay
 {
     ////////////////////////////////////////
+    struct Framebuffer;
+
+    ////////////////////////////////////////
     struct NCDeviceOptions
     {
     private:
+        /* notcurses options */
         bool mNoAlternateScreen{ DEFAULT_NO_ALTERNATE_SCREEN };
         bool mSuppressBanners{ DEFAULT_SUPPRESS_BANNERS };
         ncblitter_e mBlitter{ DEFAULT_BLITTER };
         ncloglevel_e mLogLevel{ DEFAULT_LOGLEVEL };
+
+        /* logging */
         std::string mLogFileName{ DEFAULT_LOGFILE_NAME };
+        bool mDumpLogs{ DEFAULT_DUMP_LOGS };
+
+        /* framebuffer options */
         glm::vec4 mClearColor{ DEFAULT_CLEAR_COLOR };
+
+        /* hardware device options */
+        HWDeviceOptions mHWOptions;
 
         const char* GetBlitterName() const;
         const char* GetLogLevelName() const;
         const char* GetClearColorValues() const;
+        const char* GetDeviceTypeName() const;
 
         [[noreturn]] void PrintHelp(char** argv) const;
 
@@ -55,8 +68,12 @@ namespace CursedRay
         bool NoAlternateScreen() const { return mNoAlternateScreen; }
         bool SuppressBanners() const { return mSuppressBanners; }
         ncblitter_e Blitter() const { return mBlitter; }
+
         ncloglevel_e LogLevel() const { return mLogLevel; }
+        bool DumpLogs() const { return mDumpLogs; }
+
         glm::vec4 ClearColor() const { return mClearColor; }
+        HWDeviceOptions GetHWDeviceOptions() const { return mHWOptions; }
     };
 
     ////////////////////////////////////////
@@ -71,6 +88,8 @@ namespace CursedRay
         std::uint32_t mWidth, mHeight;
         std::uint32_t mPixelsWidth, mPixelsHeight;
         std::uint32_t mCellWidth, mCellHeight;
+
+        bool mDumpLogs;
 
     public:
         explicit NCDevice(const NCDeviceOptions& options);

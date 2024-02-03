@@ -34,8 +34,13 @@ namespace CursedRay
     constexpr bool DEFAULT_NO_ALTERNATE_SCREEN      { true };
     constexpr bool DEFAULT_SUPPRESS_BANNERS         { true };
     constexpr ncblitter_e DEFAULT_BLITTER           { NCBLIT_1x1 };
+
+    ////////////////////////////////////////
     constexpr ncloglevel_e DEFAULT_LOGLEVEL         { NCLOGLEVEL_SILENT };
     constexpr const char DEFAULT_LOGFILE_NAME[]     { "cray.log" };
+    constexpr bool DEFAULT_DUMP_LOGS                { false };
+
+    ////////////////////////////////////////
     constexpr glm::vec4 DEFAULT_CLEAR_COLOR         { glm::vec4(0.2f, 0.2f, 0.3f, 1.0f) };
     constexpr glm::vec3 DEFAULT_CAMERA_POSITION     { glm::vec3(0.0f, 0.0f, 0.0f) };
     constexpr float DEFAULT_CAMERA_FOCAL_LENGTH     { 1.0f };

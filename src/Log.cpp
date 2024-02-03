@@ -53,6 +53,7 @@ namespace CursedRay
         std::vsnprintf(processedOutput, 250, args, ap);
         int charsWritten{ std::snprintf(finalOutput, 500, "[%02d:%02d:%02d %02d:%02d:%02d] %s\n", timeInfo.tm_mon, timeInfo.tm_mday, timeInfo.tm_year + 1900, timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_sec, processedOutput) };
         logFile.write(finalOutput, charsWritten);
+        logFile.flush();
         va_end(ap);
     }
 }
